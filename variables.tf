@@ -80,12 +80,12 @@ variable "ssh_user" {
 }
 
 variable "region_name" {
-  description = "Region name for AWS. Example: 'us-west-2'"
+  description = "Region name for AWS. Example: 'us-east-2'"
   type        = string
 }
 
 variable "availability_zones" {
-  description = "List of availability zones to utilize. Example: ['us-west-1a','us-west-1b','us-west-1c']"
+  description = "List of availability zones to utilize. Example: ['us-east-1a','us-east-1b','us-east-1c']"
   type        = list(string)
 }
 

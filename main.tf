@@ -30,31 +30,21 @@ terraform {
 }
 
 provider "aws" {
-  version = "~> 3.0"
+  version = ">= 3.0.0"
   region  = var.region_name
 }
 
-data "aws_ami" "yugabyte_ami" {
+data "aws_ami" "instance" {
   most_recent = true
-  owners      = ["aws-marketplace"]
 
   filter {
-    name = "name"
-
-    values = [
-      "CentOS Linux 7 x86_64 HVM EBS *",
-    ]
-  }
-  filter {
-    name   = "architecture"
-    values = ["x86_64"]
+    name   = "image-id"
+    values = ["ami-07867d4ff582be5da"]
   }
 
-  filter {
-    name   = "root-device-type"
-    values = ["ebs"]
-  }
+  owners = ["self"]
 }
+
 
 #########################################################
 #
@@ -156,7 +146,7 @@ resource "aws_security_group" "yugabyte_intra" {
 
 resource "aws_instance" "yugabyte_nodes" {
   count                       = var.num_instances
-  ami                         = data.aws_ami.yugabyte_ami.id
+  ami                         = data.aws_ami.instance.id
   associate_public_ip_address = var.associate_public_ip_address
   instance_type               = var.instance_type
   key_name                    = var.ssh_keypair
